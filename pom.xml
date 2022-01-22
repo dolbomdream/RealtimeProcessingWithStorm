@@ -9,8 +9,9 @@
   <version>1.0-SNAPSHOT</version>
 
   <properties>
-    <maven.compiler.source>8</maven.compiler.source>
-    <maven.compiler.target>8</maven.compiler.target>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <storm.version>2.3.0</storm.version>
   </properties>
 
@@ -37,8 +38,33 @@
     <dependency>
           <groupId>org.twitter4j</groupId>
           <artifactId>twitter4j-core</artifactId>
-          <version>[4.0,)</version>
+          <version>4.0.4</version>
+          <scope>system</scope>
+            <systemPath> /home/ubuntu/RealtimeProcessingWithStorm/src/lib/twitter4j-core-4.0.7.jar </systemPath>
+
       </dependency>
+
+      <!-- <dependency>
+          <groupId>org.twitter4j</groupId>
+          <artifactId>twitter4j-stream</artifactId>
+          <version>4.0.7</version>
+           <scope>system</scope>
+            <systemPath>src\lib\ldapjdk.jar</systemPath>
+      </dependency> -->
+
+      <dependency>
+         <groupId>junit</groupId>
+         <artifactId>junit</artifactId>
+         <version>3.8.1</version>
+      </dependency>
+
+
+    <dependency>
+        <groupId>com.konghq</groupId>
+        <artifactId>unirest-java</artifactId>
+        <version>3.13.6</version>
+        <classifier>standalone</classifier>
+    </dependency>
 
   </dependencies>
 
@@ -48,7 +74,8 @@
 
     <pluginManagement>
       <plugins>
-      <!--   <plugin>
+
+        <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.3</version>
@@ -56,7 +83,11 @@
             <source>1.8</source>
             <target>1.8</target>
           </configuration>
-        </plugin> -->
+        </plugin>
+
+
+
+
 
         <!-- <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -77,6 +108,7 @@
             <mainClass>com.dolbomdream.MyTopology</mainClass>
           </configuration>
         </plugin> -->
+
         <plugin>
           <!-- Build an executable JAR -->
           <groupId>org.apache.maven.plugins</groupId>
@@ -87,7 +119,7 @@
               <manifest>
                 <addClasspath>true</addClasspath>
                 <!-- here we specify that we want to use the main method within the App class -->
-                <mainClass>com.dolbomdream.TwitterPublisher</mainClass>
+                <mainClass>com.dolbomdream.RealTimeRanking</mainClass>
               </manifest>
             </archive>
           </configuration>
@@ -105,6 +137,43 @@
             </descriptorRefs>
         </configuration>
         </plugin>
+
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>2.3</version>
+          <executions>
+            <execution>
+              <id>copy-dependencies</id>
+              <phase>package</phase>
+              <goals>
+              <goal>copy-dependencies</goal>
+              </goals>
+              <configuration>
+                <outputDirectory>src/lib</outputDirectory>
+                <overWriteReleases>true</overWriteReleases>
+                <overWriteSnapshots>true</overWriteSnapshots>
+                <overWriteIfNewer>true</overWriteIfNewer>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <classpathPrefix>lib/</classpathPrefix>
+              <mainClass>$fullqualified path to your main Class</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
 
 
       </plugins>

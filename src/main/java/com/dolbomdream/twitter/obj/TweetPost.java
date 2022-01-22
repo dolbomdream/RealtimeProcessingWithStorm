@@ -44,10 +44,10 @@ public class TweetPost {
     @Override
     public String toString() {
         return "TweetPost{" +
-                "id=" + id +
-                ", text='" + text + '\'' +
-                ", lang='" + lang + '\'' +
-                ", createdAt=" + createdAt +
+                "id=" + this.id +
+                ", text='" + this.text + '\'' +
+                ", lang='" + this.lang + '\'' +
+                ", createdAt=" + this.createdAt +
                 '}' + '\n';
     }
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.dolbomdream.config.TwitterConfiguration;
-import com.dolbomdream.twitter.obj.TweetPost;
+// import com.dolbomdream.twitter.obj.TweetPost;
 
 import twitter4j.*;
 
@@ -20,6 +20,8 @@ public class TwitterLoader {
 
     public List<Status> getTweetList(Query query, int totalCount) throws Exception{
         List<Status> tweetList = null;
+          System.out.println("Twitter Loader, getTweetList");
+
         if(totalCount < 100){
             query.setCount(totalCount);
             tweetList = this.getTweetBlock(query);

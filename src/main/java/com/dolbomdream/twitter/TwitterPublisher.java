@@ -1,33 +1,46 @@
 package com.dolbomdream.twitter;
+import com.dolbomdream.twitter.obj.TwitterLoader;
 
-import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+// import org.eclipse.paho.client.mqttv3.MqttClient;
+// import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+// import org.eclipse.paho.client.mqttv3.MqttException;
+// import org.eclipse.paho.client.mqttv3.MqttMessage;
+// import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 
 import twitter4j.*;
-import twitter.TwitterLoader;
-import java.util.List;
+import java.util.*;
 
 public class TwitterPublisher {
-  TwitterLoader twitLoader = new TwitterLoader();
+  static TwitterLoader twitLoader = new TwitterLoader();
+  static Query currentFilter;
+  public TwitterPublisher() {
+    assert true;
 
-  private TwitterPublisher() {
   }
 
 
-  public void mqttPublish(List<Status> result) {
+  public static void mqttPublish(Status result) {
+    assert true;
+
   }
 
   public static void publish(){
     try {
-      List<Status> result = twitLoader.getTweetList(query,10);
-      this.mqttPublish(result);
-    }catch (Exception e){
+      List<Status> result = twitLoader.getTweetList(currentFilter,10);
+      Iterator<Status> statusIterator = result.iterator();
+      while (statusIterator.hasNext()) {
+          mqttPublish(statusIterator.next());
+            // System.out.println(statusIterator.next());
+      }
+    }
+    catch (Exception e){
       e.printStackTrace();
     }
+  }
+
+  public static void set_filter(Query query){
+    currentFilter = query;
   }
 
 
